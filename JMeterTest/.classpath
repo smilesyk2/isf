@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6">
+		<attributes>
+			<attribute name="owner.project.facets" value="java"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
+	<classpathentry kind="lib" path="lib/ApacheJMeter_java.jar"/>
+	<classpathentry kind="lib" path="lib/ApacheJMeter_core.jar"/>
+	<classpathentry kind="lib" path="lib/jorphan.jar"/>
+	<classpathentry kind="lib" path="lib/queryapi530.jar"/>
+	<classpathentry kind="lib" path="lib/logkit-2.0.jar"/>
+	<classpathentry kind="lib" path="lib/refapi210.jar"/>
+	<classpathentry kind="lib" path="lib/spring-security-core-3.2.0.RELEASE.jar"/>
+	<classpathentry kind="lib" path="lib/commons-lang3-3.1.jar"/>
+	<classpathentry kind="lib" path="/WiseTea20/classes"/>
+	<classpathentry kind="output" path="build/classes"/>
+</classpath>
