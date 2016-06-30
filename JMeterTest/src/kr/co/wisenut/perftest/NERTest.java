@@ -170,12 +170,12 @@ public class NERTest extends AbstractJavaSamplerClient {
 			/******************************** TEST START *************************************/ 
 			
 			WiseTeaWorker teaWorker = new WiseTeaWorker(TEA_IP, TEA_PORT, COLLECTION);
-			WiseSearchWorker searchWorker = new WiseSearchWorker(SF1_IP, SF1_PORT, COLLECTION, SEARCH_FIELDS, DOCUMENT_FIELDS);
+			//WiseSearchWorker searchWorker = new WiseSearchWorker(SF1_IP, SF1_PORT, COLLECTION, SEARCH_FIELDS, DOCUMENT_FIELDS);
 			
 			System.out.println(CONTENTS);
 	    	
 	        // 1. 입력한 기사와 유사 기사들을 찾아서 한 덩어리로 만듦.        
-	    	List<Pair<Double>> similarDocumentList = teaWorker.getRecommendedContentsPair(COLLECTION, CONTENTS, PAGE_NO);
+	    	/*List<Pair<Double>> similarDocumentList = teaWorker.getRecommendedContentsPair(COLLECTION, CONTENTS, PAGE_NO);
 	    	StringBuffer docidSb = new StringBuffer();
 	        for (int i = 0; i < similarDocumentList.size(); i++) {
 	        	Pair<Double> item = similarDocumentList.get(i);
@@ -204,10 +204,11 @@ public class NERTest extends AbstractJavaSamplerClient {
 				for(HashMap<String,String> thisMap : resultMapList){
 					similarContent += thisMap.get(SEARCH_FIELDS); // 검색 결과 중 CONTENT_PLAIN의 내용만 덧붙임. 
 				}
-			}
+			}*/
 	        
 	        // 2. 유사 기사 덩어리와 입력된 기사를 개체명 조회 메소드에 넣어서 결과를 받아옴.
-	 		List<Pair<Integer>> nerPairList = teaWorker.getNerPair( CONTENTS, similarContent );
+	 		List<Pair<Integer>> nerPairList = teaWorker.getNerPair( COLLECTION, CONTENTS, "10" );
+	 		
 	 		StringBuffer resultSb = new StringBuffer();
 	 		resultSb.append("####################################################################").append("\n");
 	 		resultSb.append(CONTENTS).append("\n");

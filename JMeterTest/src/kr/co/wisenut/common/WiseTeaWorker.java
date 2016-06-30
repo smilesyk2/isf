@@ -35,16 +35,26 @@ public class WiseTeaWorker {
 		article = searchField + "$!$" + article;
 		List<Pair<Integer>> keywordList = teaClient.extractKeywordsForPlainText(collectionId, article, "TERMS");
 		
+		if(teaClient.hasError()){
+			LOGGER.error("[WiseTeaWorker>getMainKeywordsPair][" + teaClient.getErrorCode()+"] " + teaClient.getErrorMessage());
+			throw new Exception("[" + teaClient.getErrorCode()+"] " + teaClient.getErrorMessage());
+		}
+		
 		totalKeywordsCount = keywordList.size();
 		LOGGER.info("extractKeywordsForPlainText results in " + keywordList.size() + " keywords.");
 		
 		return keywordList;
 	}
 	
-	public List<Pair<Integer>> getNerPair(String article, String similarContent){
+	public List<Pair<Integer>> getNerPair(String collection, String article, String topN) throws Exception{
 		TeaClient teaClient = new TeaClient(teaIP, teaPort);
 		
-		return teaClient.extractNerForPlainText("article", article, "");
+		if(teaClient.hasError()){
+			LOGGER.error("[WiseTeaWorker>getNerPair][" + teaClient.getErrorCode()+"] " + teaClient.getErrorMessage());
+			throw new Exception("[" + teaClient.getErrorCode()+"] " + teaClient.getErrorMessage());
+		}
+		
+		return teaClient.extractNerForPlainText(collection, article, topN);
 	}
 	
 	// 모델만 이용
@@ -52,10 +62,15 @@ public class WiseTeaWorker {
 		TeaClient teaClient = new TeaClient(teaIP, teaPort);
 		
 		contents = searchField + "$!$" + contents;
-		List<Pair<Double>> documentList = teaClient.getSimilarDoc( type, contents, String.valueOf(pageSize));
+		List<Pair<Double>> documentList = teaClient.getSimilarDoc( type, contents, String.valueOf(pageSize), "");
 		
 		totalRecommendedMediaCount = documentList.size();
 		LOGGER.info("getSimilarDoc results in " + documentList.size() + " documents.");
+		
+		if(teaClient.hasError()){
+			LOGGER.error("[WiseTeaWorker>getRecommendedContentsPair][" + teaClient.getErrorCode()+"] " + teaClient.getErrorMessage());
+			throw new Exception("[" + teaClient.getErrorCode()+"] " + teaClient.getErrorMessage());
+		}
 		
 		return documentList;
 	}
@@ -65,10 +80,15 @@ public class WiseTeaWorker {
 		TeaClient teaClient = new TeaClient(teaIP, teaPort);
 		
 		article = searchField + "$!$" + article;
-		List<Pair<Double>> documentList = teaClient.getSimilarDocSf1( type, article, "100", searchResultList);
+		List<Pair<Double>> documentList = teaClient.getSimilarDoc( type, article, "100", searchResultList, "");
 		
 		totalRecommendedMediaCount = documentList.size();
 		LOGGER.info("getSimilarDocSf1 results in " + documentList.size() + " documents.");
+		
+		if(teaClient.hasError()){
+			LOGGER.error("[WiseTeaWorker>getRecommendedContentsPair][" + teaClient.getErrorCode()+"] " + teaClient.getErrorMessage());
+			throw new Exception("[" + teaClient.getErrorCode()+"] " + teaClient.getErrorMessage());
+		}
 		
 		return documentList;
 	}

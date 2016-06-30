@@ -180,7 +180,7 @@ public class RecommendTest extends AbstractJavaSamplerClient {
 	    		// similarDoc만 사용
 	        	docidList = teaWorker.getRecommendedContentsPair(COLLECTION, CONTENTS, PAGE_NO);
 	        	totalResultCount = teaWorker.getTotalRecommendedMediaCount();
-	    	}else{ // 모델 + SF1 사용
+	    	}/*else{ // 모델 + SF1 사용
 	    		// 입력 받은 기사에서 주제어를 추출.
 	    		List<Pair<Integer>> keywordList = teaWorker.getMainKeywordsPair(CONTENTS);
 	        	StringBuffer query = new StringBuffer();
@@ -219,31 +219,32 @@ public class RecommendTest extends AbstractJavaSamplerClient {
 	    	}
     		
     		searchWorker.search("", "", 0, PAGE_NO, "", searchWorker.makePrefixQuery(map), "ALL");
-    		
     		totalResultCount = searchWorker.getTotalResultCount();
+	    	 */
     		
 			// DOCID Search에 대한 결과는 한 개이므로 첫번째 결과만 가져와서 add.
     		StringBuffer resultSb = new StringBuffer();
     		resultSb.append("####################################################################").append("\n");
 	 		resultSb.append(CONTENTS).append("\n");
 	 		resultSb.append("####################################################################").append("\n");
-			if(searchWorker.getResultList().size()>0){
+			//if(searchWorker.getResultList().size()>0){
 				//for(HashMap<String,String> resultMap : searchWorker.getResultList()){
-				for(int cnt=1; cnt<=searchWorker.getResultList().size(); cnt++){
-					HashMap<String,String> resultMap = searchWorker.getResultList().get(cnt-1);
-					
-					resultSb.append("- NO : " + cnt + "\n");
-					resultSb.append("- UID : " + resultMap.get("UID") + "\n");
-					resultSb.append("- DOCID : " + resultMap.get("DOCID") + "\n");
-					resultSb.append("- TITLE : " + resultMap.get("TITLE") + "\n");
-					resultSb.append("- CONTENTS : " + resultMap.get("CONTENT_PLAIN") + "\n");
-					resultSb.append("\n\n");
-				}
+				//for(int cnt=1; cnt<=searchWorker.getResultList().size(); cnt++){
+	 		for (Pair<Double> item : docidList) {
+	            if (null == item) {
+	                continue;
+	            }
 				
-				results.setSamplerData(resultSb.toString());
-				results.setBodySize(totalResultCount);
-				results.setResponseData(resultSb.toString().getBytes());
+				//resultSb.append("- NO : " + cnt + "\n");
+				resultSb.append("- DOCID : " + item.key() + "\n");
+				resultSb.append("- SCORE : " + item.value() + "\n");
+				resultSb.append("\n\n");
 			}
+				
+			results.setSamplerData(resultSb.toString());
+			results.setBodySize(totalResultCount);
+			results.setResponseData(resultSb.toString().getBytes());
+			//}
 			
 			/******************************** TEST END *************************************/
 			
